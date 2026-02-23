@@ -1,0 +1,33 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    session:
+      cookie:
+        domain: localhost
+
+spring:
+  profiles:
+    active: local
+  application:
+    name: ai-reply
+  session:
+    timeout: 86400
+  mail:
+    protocol: smtp #邮件协议
+    host: smtp.126.com #网易邮箱smtp服务器地址
+    port: 25 #默认端口
+    username: ??? #发件人邮箱地址
+    password: ??? #授权码
+    default-encoding: UTF-8 #编码字符集
+
+# 配置springdoc-openapi，用于文档化和访问API
+springdoc:
+  # 配置Swagger UI的访问路径和排序方式
+  swagger-ui:
+    path: /swagger-ui.html  # Swagger UI的访问路径
+    tags-sorter: alpha      # 按字母顺序排序标签
+    operations-sorter: alpha  # 按字母顺序排序操作
+  # 配置API文档的访问路径
+  api-docs:
+    path: /v3/api-docs  # API文档的访问路径
