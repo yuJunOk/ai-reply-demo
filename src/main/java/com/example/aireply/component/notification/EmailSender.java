@@ -1,11 +1,13 @@
 package com.example.aireply.component.notification;
 
 import jakarta.annotation.Resource;
+import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,6 +41,20 @@ public class EmailSender {
             javaMailSender.send(message);
         } catch (Exception e) {
             log.error("邮件发送异常", e);
+        }
+    }
+
+    public void sendHtmlMail(String mailTitle, String htmlContent, String to) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            helper.setFrom(from);
+            helper.setTo(to);
+            helper.setSubject(mailTitle);
+            helper.setText(htmlContent, true);
+            javaMailSender.send(mimeMessage);
+        } catch (Exception e) {
+            log.error("HTML邮件发送异常", e);
         }
     }
 
