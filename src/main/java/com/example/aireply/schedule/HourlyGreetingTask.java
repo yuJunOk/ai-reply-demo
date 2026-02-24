@@ -14,12 +14,17 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Component
 public class HourlyGreetingTask {
     @Resource
     private EmailSender emailSender;
+
+    @Resource
+    private SystemMetricsCollector systemMetricsCollector;
 
     @Value("${greeting.mail.to:}")
     private String greetingTo;
@@ -33,18 +38,26 @@ public class HourlyGreetingTask {
                 log.warn("greeting.mail.to is blank, skip hourly greeting email");
                 return;
             }
-            String subject = "每小时问候";
-            String html = buildGreetingHtml();
-            emailSender.sendHtmlMail(subject, html, greetingTo);
+
+            SystemMetrics metrics = systemMetricsCollector.collect();
+            byte[] chartImage = systemMetricsCollector.generateMemoryPieChartImage(metrics);
+
+            Map<String, byte[]> images = new HashMap<>();
+            if (chartImage != null) {
+                images.put("memoryChart", chartImage);
+            }
+
+            String subject = "每小时报表";
+            String html = buildGreetingHtml(metrics);
+            emailSender.sendHtmlMailWithImages(subject, html, images, greetingTo);
         } catch (IOException e) {
             emailSender.sendBugReport(e);
         }
     }
 
-    private String buildGreetingHtml() throws IOException {
+    private String buildGreetingHtml(SystemMetrics metrics) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         String time = now.format(FORMATTER);
-        SystemMetrics metrics = SystemMetricsCollector.collect();
         String systemStatus = metrics.formatForMail();
         String template = loadTemplate("templates/hourly-greeting.html");
         template = template.replace("${time}", time);

@@ -6,9 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * @email: pengyujun53@163.com
@@ -55,6 +58,27 @@ public class EmailSender {
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
             log.error("HTML邮件发送异常", e);
+        }
+    }
+
+    public void sendHtmlMailWithImages(String mailTitle, String htmlContent, Map<String, byte[]> inlineImages, String to) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            helper.setFrom(from);
+            helper.setTo(to);
+            helper.setSubject(mailTitle);
+            helper.setText(htmlContent, true);
+
+            if (inlineImages != null) {
+                for (Map.Entry<String, byte[]> entry : inlineImages.entrySet()) {
+                    helper.addInline(entry.getKey(), new ByteArrayResource(entry.getValue()), "image/png");
+                }
+            }
+
+            javaMailSender.send(mimeMessage);
+        } catch (Exception e) {
+            log.error("发送带图片的 HTML 邮件失败", e);
         }
     }
 

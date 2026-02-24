@@ -1,8 +1,12 @@
 package com.example.aireply.common.model.bo.monitoring;
 
+import com.example.aireply.util.DurationUtils;
+import lombok.Getter;
+
 /**
  * @author 13758
  */
+@Getter
 public class SystemMetrics {
     private final String hostname;
     private final String os;
@@ -14,10 +18,10 @@ public class SystemMetrics {
     private final long diskTotalGb;
     private final long diskUsedGb;
     private final double diskUsagePercent;
-    private final long uptimeMinutes;
+    private final long uptimeMillis;
     private final Double cpuTempCelsius;
 
-    public SystemMetrics(String hostname, String os, String osArch, double cpuLoad, long usedHeapMb, long maxHeapMb, double heapUsagePercent, long diskTotalGb, long diskUsedGb, double diskUsagePercent, long uptimeMinutes, Double cpuTempCelsius) {
+    public SystemMetrics(String hostname, String os, String osArch, double cpuLoad, long usedHeapMb, long maxHeapMb, double heapUsagePercent, long diskTotalGb, long diskUsedGb, double diskUsagePercent, long uptimeMillis, Double cpuTempCelsius) {
         this.hostname = hostname;
         this.os = os;
         this.osArch = osArch;
@@ -28,14 +32,14 @@ public class SystemMetrics {
         this.diskTotalGb = diskTotalGb;
         this.diskUsedGb = diskUsedGb;
         this.diskUsagePercent = diskUsagePercent;
-        this.uptimeMinutes = uptimeMinutes;
+        this.uptimeMillis = uptimeMillis;
         this.cpuTempCelsius = cpuTempCelsius;
     }
 
     public String formatForMail() {
         StringBuilder sb = new StringBuilder();
         sb.append("主机: ").append(hostname).append(" (").append(os).append(", ").append(osArch).append(")").append("\n");
-        sb.append("运行时长: ").append(uptimeMinutes).append(" 分钟").append("\n");
+        sb.append("运行时长: ").append(DurationUtils.formatSmartLong(uptimeMillis)).append("\n");
         sb.append("CPU 负载: ");
         if (cpuLoad >= 0) {
             sb.append(String.format("%.1f%%", cpuLoad * 100));

@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8"/>
-    <title>每小时问候</title>
+    <title>每小时报表</title>
 </head>
 <body style="margin:0;padding:0;background-color:#f4f4f4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,'PingFang SC','Microsoft YaHei',sans-serif;">
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;">
@@ -11,21 +11,23 @@
             <table cellpadding="0" cellspacing="0" width="600" style="max-width:600px;width:100%;background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
                 <tr>
                     <td style="background:linear-gradient(90deg,#4e54c8,#8f94fb);padding:16px 24px;color:#ffffff;font-size:18px;font-weight:600;">
-                        AI Reply 每小时问候
+                        监控信息系统 每小时报表
                     </td>
                 </tr>
                 <tr>
                     <td style="padding:24px 24px 16px 24px;color:#333333;font-size:14px;line-height:1.6;">
-                        <p style="margin:0 0 12px 0;font-size:15px;">你好，这是一封定时问候邮件。</p>
+                        <p style="margin:0 0 12px 0;font-size:15px;">你好，这是一封定时报表邮件。</p>
                         <p style="margin:0 0 12px 0;">
                             当前时间：
                             <span style="color:#4e54c8;font-weight:600;">${time}</span>
                         </p>
                         <p style="margin:0 0 12px 0;">当前系统状态：</p>
-                        <pre style="margin:0 0 12px 0;font-size:12px;background:#f7f7f7;padding:8px;border-radius:4px;white-space:pre-wrap;">
-${systemStatus}
-                        </pre>
-                        <p style="margin:0 0 12px 0;">祝你这一小时工作顺利，心情舒畅。</p>
+                        <pre style="margin:0 0 12px 0;font-size:12px;background:#f7f7f7;padding:8px;border-radius:4px;white-space:pre-wrap;">${systemStatus}</pre>
+                        <p style="margin:12px 0 8px 0; font-weight: bold;">内存状态可视化：</p>
+                        <div style="text-align: center; padding: 10px; background: #fff; border: 1px solid #eee; border-radius: 4px; overflow: hidden;">
+                            <img src="cid:memoryChart" alt="内存使用饼图" style="width: 100%; max-width: 400px; height: auto; display: block; margin: 0 auto;"/>
+                        </div>
+                        <p style="margin:12px 0 12px 0;">愿你这一小时顺心如意，享受当下。</p>
                     </td>
                 </tr>
                 <tr>
