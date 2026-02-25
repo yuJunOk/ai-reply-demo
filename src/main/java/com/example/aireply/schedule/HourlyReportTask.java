@@ -1,8 +1,10 @@
 package com.example.aireply.schedule;
 
 import com.example.aireply.common.model.bo.monitoring.SystemMetrics;
+import com.example.aireply.component.metrics.SystemMetricsCollector;
+import com.example.aireply.component.metrics.visualizer.MetricsVisualizer;
+import com.example.aireply.component.metrics.visualizer.MetricsVisualizerFactory;
 import com.example.aireply.component.notification.EmailSender;
-import com.example.aireply.util.SystemMetricsCollector;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,43 +21,50 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class HourlyGreetingTask {
+public class HourlyReportTask {
     @Resource
     private EmailSender emailSender;
 
     @Resource
     private SystemMetricsCollector systemMetricsCollector;
 
-    @Value("${greeting.mail.to:}")
-    private String greetingTo;
+    @Resource
+    private MetricsVisualizerFactory visualizerFactory;
+
+    @Value("${mail.manager}")
+    private String manageEmail;
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Scheduled(cron = "0 0 * * * ?")
     public void sendHourlyGreeting() {
         try {
-            if (greetingTo == null || greetingTo.isBlank()) {
-                log.warn("greeting.mail.to is blank, skip hourly greeting email");
+            if (manageEmail == null || manageEmail.isBlank()) {
+                log.warn("mail.manager is blank, skip hourly report email");
                 return;
             }
 
             SystemMetrics metrics = systemMetricsCollector.collect();
-            byte[] chartImage = systemMetricsCollector.generateMemoryPieChartImage(metrics);
 
+            // 使用工厂获取所有可视化器并生成图表
             Map<String, byte[]> images = new HashMap<>();
-            if (chartImage != null) {
-                images.put("memoryChart", chartImage);
+            for (MetricsVisualizer visualizer : visualizerFactory.getAllVisualizers()) {
+                byte[] chartData = visualizer.visualize(metrics);
+                if (chartData != null) {
+                    // 通过枚举获取统一定义的 CID
+                    images.put(visualizer.getType().getCid(), chartData);
+                }
             }
 
             String subject = "每小时报表";
-            String html = buildGreetingHtml(metrics);
-            emailSender.sendHtmlMailWithImages(subject, html, images, greetingTo);
+            String html = buildReportHtml(metrics);
+            emailSender.sendHtmlMailWithImages(subject, html, images, manageEmail);
         } catch (IOException e) {
             emailSender.sendBugReport(e);
         }
     }
 
-    private String buildGreetingHtml(SystemMetrics metrics) throws IOException {
+    private String buildReportHtml(SystemMetrics metrics) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         String time = now.format(FORMATTER);
         String systemStatus = metrics.formatForMail();

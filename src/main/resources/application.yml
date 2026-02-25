@@ -11,6 +11,7 @@ spring:
     active: local
   application:
     name: ai-reply
+    display-name: AI-Reply-System # 系统显示名称，用于邮件标题等
   session:
     timeout: 86400
   mail:
@@ -20,6 +21,9 @@ spring:
     username: ??? #发件人邮箱地址
     password: ??? #授权码
     default-encoding: UTF-8 #编码字符集
+
+mail:
+  manager: ??? #管理员邮箱
 
 # 配置springdoc-openapi，用于文档化和访问API
 springdoc:

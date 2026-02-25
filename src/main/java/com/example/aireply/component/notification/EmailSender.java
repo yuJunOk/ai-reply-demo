@@ -28,11 +28,11 @@ public class EmailSender {
     @Value("${spring.mail.username}")
     private String from;
 
-    @Value("${spring.application.name}")
-    private String systemName;
+    @Value("${spring.application.display-name:${spring.application.name}}")
+    private String appDisplayName;
 
-    private static final String BUG_MAIL_TITLE = "[BUG] 系统异常";
-    private static final String MANAGE_EMAIL = "1375841038@qq.com";
+    @Value("${mail.manager}")
+    private String manageEmail;
 
     public void sendMail(String mailTitle, String context, String to) {
         try {
@@ -82,8 +82,12 @@ public class EmailSender {
         }
     }
 
+    /**
+     * 发送系统异常报告
+     */
     public void sendBugReport(Exception e) {
-        String content = "发生未处理异常，请及时排查：\n\n" + ExceptionUtils.getStackTrace(e);
-        sendMail(systemName + BUG_MAIL_TITLE, content, MANAGE_EMAIL);
+        String title = String.format("%s - 异常上报", appDisplayName);
+        String context = String.format("系统名称：%s\n异常详情：%s", appDisplayName, ExceptionUtils.getStackTrace(e));
+        sendMail(title, context, manageEmail);
     }
 }
