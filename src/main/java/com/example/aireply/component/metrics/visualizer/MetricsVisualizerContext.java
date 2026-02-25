@@ -20,9 +20,6 @@ public class MetricsVisualizerContext {
     /** 历史数据仓库 */
     private final MetricsRepository repository;
     
-    /** 当前执行时间 */
-    private final LocalDateTime now;
-    
     // 未来可以轻松添加更多字段，如：
     // private final Map<String, Object> config;
     // private final String theme;

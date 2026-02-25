@@ -57,6 +57,12 @@ public class DateTimeUtils {
     private static final DateTimeFormatter FORMAT_COMPACT = DateTimeFormatter.ofPattern("MM-dd HH:mm");
 
     /**
+     * 仅时间格式: HH:mm
+     * 场景: 图表 X 轴
+     */
+    private static final DateTimeFormatter FORMAT_TIME_ONLY = DateTimeFormatter.ofPattern("HH:mm");
+
+    /**
      * ISO 8601 格式
      * 场景: 前后端交互、标准 API 响应
      */
@@ -277,6 +283,19 @@ public class DateTimeUtils {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    /**
+     * 格式化 LocalDateTime 为 HH:mm
+     *
+     * @param time LocalDateTime 对象
+     * @return 格式化后的字符串
+     */
+    public static String formatTimeOnly(LocalDateTime time) {
+        if (time == null) {
+            return "";
+        }
+        return time.format(FORMAT_TIME_ONLY);
     }
 
     /**

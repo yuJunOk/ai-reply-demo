@@ -5,7 +5,7 @@ import com.example.aireply.component.metrics.MetricsRepository;
 import com.example.aireply.component.metrics.visualizer.MetricsChartType;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizer;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizerContext;
-import jakarta.annotation.Resource;
+import com.example.aireply.util.DateTimeUtils;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -15,7 +15,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Component
 public class CpuLoadTrendVisualizer implements MetricsVisualizer {
@@ -34,9 +33,13 @@ public class CpuLoadTrendVisualizer implements MetricsVisualizer {
         XYChart chart = new XYChartBuilder().width(450).height(300).title("CPU 负载趋势 (%)").build();
         chart.getStyler().setChartBackgroundColor(Color.WHITE);
         chart.getStyler().setLegendVisible(false);
+        chart.getStyler().setXAxisLabelRotation(45);
 
+        List<String> xData = history.stream()
+                .map(m -> DateTimeUtils.formatTimeOnly(m.getCollectTime()))
+                .collect(Collectors.toList());
         List<Double> yData = history.stream().map(m -> m.getCpuLoad() * 100).collect(Collectors.toList());
-        chart.addSeries("CPU Load", IntStream.range(0, yData.size()).boxed().collect(Collectors.toList()), yData);
+        chart.addSeries("CPU Load", xData, yData);
 
         try { return BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG); }
         catch (IOException e) { return null; }
