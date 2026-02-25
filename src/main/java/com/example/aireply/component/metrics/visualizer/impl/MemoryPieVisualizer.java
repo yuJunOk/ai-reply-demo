@@ -3,6 +3,7 @@ package com.example.aireply.component.metrics.visualizer.impl;
 import com.example.aireply.common.model.bo.monitoring.SystemMetrics;
 import com.example.aireply.component.metrics.visualizer.MetricsChartType;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizer;
+import com.example.aireply.component.metrics.visualizer.MetricsVisualizerContext;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
@@ -22,10 +23,13 @@ public class MemoryPieVisualizer implements MetricsVisualizer {
     }
 
     @Override
-    public byte[] visualize(SystemMetrics metrics) {
+    public byte[] visualize(MetricsVisualizerContext context) {
+        SystemMetrics metrics = context.getCurrentMetrics();
         if (metrics == null) {
             return null;
         }
+
+        // 创建饼图
         PieChart chart = new PieChartBuilder()
                 .width(400).height(300)
                 .title("JVM 内存使用情况")

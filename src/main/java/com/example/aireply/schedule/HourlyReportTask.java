@@ -1,8 +1,10 @@
 package com.example.aireply.schedule;
 
 import com.example.aireply.common.model.bo.monitoring.SystemMetrics;
+import com.example.aireply.component.metrics.MetricsRepository;
 import com.example.aireply.component.metrics.SystemMetricsCollector;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizer;
+import com.example.aireply.component.metrics.visualizer.MetricsVisualizerContext;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizerFactory;
 import com.example.aireply.component.notification.EmailSender;
 import jakarta.annotation.Resource;
@@ -31,6 +33,9 @@ public class HourlyReportTask {
     @Resource
     private MetricsVisualizerFactory visualizerFactory;
 
+    @Resource
+    private MetricsRepository metricsRepository;
+
     @Value("${mail.manager}")
     private String manageEmail;
 
@@ -46,10 +51,14 @@ public class HourlyReportTask {
 
             SystemMetrics metrics = systemMetricsCollector.collect();
 
+            // 上下文
+            MetricsVisualizerContext metricsVisualizerContext = MetricsVisualizerContext.builder()
+                    .currentMetrics(metrics).repository(metricsRepository).build();
+
             // 使用工厂获取所有可视化器并生成图表
             Map<String, byte[]> images = new HashMap<>();
             for (MetricsVisualizer visualizer : visualizerFactory.getAllVisualizers()) {
-                byte[] chartData = visualizer.visualize(metrics);
+                byte[] chartData = visualizer.visualize(metricsVisualizerContext);
                 if (chartData != null) {
                     // 通过枚举获取统一定义的 CID
                     images.put(visualizer.getType().getCid(), chartData);

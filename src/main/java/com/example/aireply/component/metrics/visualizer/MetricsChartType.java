@@ -8,7 +8,8 @@ public enum MetricsChartType {
      *
      */
     MEMORY_PIE("memoryChart", "JVM内存饼图"),
-    CPU_LOAD("cpuLoadChart", "CPU负载图");
+    CPU_LOAD_TREND("cpuLoadTrend", "CPU负载趋势图"),
+    CPU_TEMP_TREND("cpuTempTrend", "CPU温度趋势图");
 
     private final String cid;
     private final String description;
