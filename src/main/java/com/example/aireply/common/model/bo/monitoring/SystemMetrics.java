@@ -3,14 +3,14 @@ package com.example.aireply.common.model.bo.monitoring;
 import com.example.aireply.util.DurationUtils;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author 13758
  */
 @Getter
 public class SystemMetrics {
-    private final LocalDateTime collectTime;
+    private final Date collectTime;
     private final String hostname;
     private final String os;
     private final String osArch;
@@ -25,7 +25,7 @@ public class SystemMetrics {
     private final Double cpuTempCelsius;
 
     public SystemMetrics(String hostname, String os, String osArch, double cpuLoad, long usedHeapMb, long maxHeapMb, double heapUsagePercent, long diskTotalGb, long diskUsedGb, double diskUsagePercent, long uptimeMillis, Double cpuTempCelsius) {
-        this.collectTime = LocalDateTime.now();
+        this.collectTime = new Date();
         this.hostname = hostname;
         this.os = os;
         this.osArch = osArch;

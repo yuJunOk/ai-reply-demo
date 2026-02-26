@@ -5,7 +5,6 @@ import com.example.aireply.component.metrics.MetricsRepository;
 import com.example.aireply.component.metrics.visualizer.MetricsChartType;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizer;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizerContext;
-import com.example.aireply.util.DateTimeUtils;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,8 +35,8 @@ public class CpuLoadTrendVisualizer implements MetricsVisualizer {
         chart.getStyler().setLegendVisible(false);
         chart.getStyler().setXAxisLabelRotation(45);
 
-        List<String> xData = history.stream()
-                .map(m -> DateTimeUtils.formatTimeOnly(m.getCollectTime()))
+        List<Date> xData = history.stream()
+                .map(SystemMetrics::getCollectTime)
                 .collect(Collectors.toList());
         List<Double> yData = history.stream().map(m -> m.getCpuLoad() * 100).collect(Collectors.toList());
         chart.addSeries("CPU Load", xData, yData);
