@@ -19,6 +19,8 @@
 
     <properties>
         <java.version>17</java.version>
+        <!-- 定义打包时间格式 -->
+        <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
@@ -92,6 +94,8 @@
     </dependencies>
 
     <build>
+        <!-- 自定义打包后的文件名 -->
+        <finalName>${project.artifactId}-${maven.build.timestamp}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
