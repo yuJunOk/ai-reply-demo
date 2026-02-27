@@ -77,7 +77,7 @@ public class HourlyReportTask {
         LocalDateTime now = LocalDateTime.now();
         String time = now.format(FORMATTER);
         String systemStatus = metrics.formatForMail();
-        String template = loadTemplate("templates/hourly-greeting.html");
+        String template = loadTemplate("templates/hourly-report.html");
         template = template.replace("${time}", time);
         template = template.replace("${systemStatus}", systemStatus);
         return template;
