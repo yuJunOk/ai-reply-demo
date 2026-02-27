@@ -15,7 +15,7 @@ import java.nio.file.FileSystems;
 
 /**
  * 系统指标采集组件
- * 放置在 component.monitoring 包下，职责明确：负责采集与可视化逻辑
+ * 负责采集与可视化逻辑
  */
 @Component
 public class SystemMetricsCollector {
