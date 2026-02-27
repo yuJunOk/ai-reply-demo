@@ -1,4 +1,4 @@
-package com.example.aireply.schedule;
+package com.example.aireply.tasks;
 
 import com.example.aireply.component.metrics.model.SystemMetrics;
 import com.example.aireply.component.metrics.MetricsRepository;
