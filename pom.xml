@@ -84,11 +84,11 @@
             <version>4.12.0</version>
         </dependency>
 
-        <!-- 农历库 https://6tail.cn/calendar/api.html -->
+        <!-- 农历库 https://6tail.cn/tyme.html -->
         <dependency>
             <groupId>cn.6tail</groupId>
-            <artifactId>lunar</artifactId>
-            <version>1.7.7</version>
+            <artifactId>tyme4j</artifactId>
+            <version>1.4.3</version>
         </dependency>
 
         <!-- swagger -->
