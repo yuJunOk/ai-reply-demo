@@ -1,6 +1,6 @@
 package com.example.aireply.component.metrics.visualizer.impl;
 
-import com.example.aireply.common.model.bo.monitoring.SystemMetrics;
+import com.example.aireply.component.metrics.model.SystemMetrics;
 import com.example.aireply.component.metrics.visualizer.MetricsChartType;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizer;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizerContext;

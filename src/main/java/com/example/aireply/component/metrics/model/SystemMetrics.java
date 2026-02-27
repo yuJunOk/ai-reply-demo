@@ -1,4 +1,4 @@
-package com.example.aireply.common.model.bo.monitoring;
+package com.example.aireply.component.metrics.model;
 
 import com.example.aireply.util.DurationUtils;
 import lombok.Getter;

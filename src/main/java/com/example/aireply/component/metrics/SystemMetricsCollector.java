@@ -1,6 +1,6 @@
 package com.example.aireply.component.metrics;
 
-import com.example.aireply.common.model.bo.monitoring.SystemMetrics;
+import com.example.aireply.component.metrics.model.SystemMetrics;
 import com.example.aireply.component.metrics.provider.LinuxMetricsProvider;
 import com.example.aireply.component.metrics.provider.MetricsProvider;
 import com.example.aireply.component.metrics.provider.WindowsMetricsProvider;

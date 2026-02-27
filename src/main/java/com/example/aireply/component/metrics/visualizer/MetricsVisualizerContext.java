@@ -1,11 +1,9 @@
 package com.example.aireply.component.metrics.visualizer;
 
-import com.example.aireply.common.model.bo.monitoring.SystemMetrics;
+import com.example.aireply.component.metrics.model.SystemMetrics;
 import com.example.aireply.component.metrics.MetricsRepository;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 /**
  * 可视化上下文对象

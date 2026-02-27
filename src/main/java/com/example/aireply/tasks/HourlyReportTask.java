@@ -1,6 +1,6 @@
 package com.example.aireply.schedule;
 
-import com.example.aireply.common.model.bo.monitoring.SystemMetrics;
+import com.example.aireply.component.metrics.model.SystemMetrics;
 import com.example.aireply.component.metrics.MetricsRepository;
 import com.example.aireply.component.metrics.SystemMetricsCollector;
 import com.example.aireply.component.metrics.visualizer.MetricsVisualizer;
