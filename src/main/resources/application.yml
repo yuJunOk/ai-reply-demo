@@ -21,7 +21,14 @@ spring:
     username: ??? #发件人邮箱地址
     password: ??? #授权码
     default-encoding: UTF-8 #编码字符集
-
+  ai:
+    openai:
+      api-key: sk-your-key-here  # 替换为你的 API Key
+      base-url:
+      chat:
+        options:
+          model: your-model-id
+          temperature: 0.7
 mail:
   manager: ??? #管理员邮箱
 
