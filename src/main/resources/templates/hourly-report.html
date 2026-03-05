@@ -76,22 +76,40 @@
                             </div>
                         </div>
 
+                        <!-- 树莓派照片 -->
+                        [IF:hasCamera]
+                        <p style="margin:12px 0 8px 0; font-weight: bold;">📸 树莓派现场实拍：</p>
+                        <div style="text-align: center; padding: 10px; background: #fff; border: 1px solid #eee; border-radius: 4px; overflow: hidden;">
+                            <img src="cid:rpiCamera" alt="树莓派实拍" style="width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto;"/>
+                        </div>
+                        [/IF]
+
                         <p style="margin:0 0 12px 0;">当前系统状态：</p>
                         <pre style="margin:0 0 12px 0;font-size:12px;background:#f7f7f7;padding:8px;border-radius:4px;white-space:pre-wrap;">${systemStatus}</pre>
-                        <p style="margin:12px 0 8px 0; font-weight: bold;">内存状态可视化：</p>
+
+                        <!-- 内存图表 -->
+                        [IF:hasMemoryChart]
+                        <p style="margin:12px 0 8px 0; font-weight: bold;">📊 内存状态可视化：</p>
                         <div style="text-align: center; padding: 10px; background: #fff; border: 1px solid #eee; border-radius: 4px; overflow: hidden;">
                             <img src="cid:memoryChart" alt="内存使用饼图" style="width: 100%; max-width: 400px; height: auto; display: block; margin: 0 auto;"/>
                         </div>
+                        [/IF]
                         
-                        <p style="margin:12px 0 8px 0; font-weight: bold;">CPU 负载趋势 (最近1小时)：</p>
+                        <!-- CPU 负载 -->
+                        [IF:hasCpuLoadTrend]
+                        <p style="margin:12px 0 8px 0; font-weight: bold;">📈 CPU 负载趋势 (最近1小时)：</p>
                         <div style="text-align: center; padding: 10px; background: #fff; border: 1px solid #eee; border-radius: 4px; overflow: hidden;">
                             <img src="cid:cpuLoadTrend" alt="CPU负载趋势图" style="width: 100%; max-width: 450px; height: auto; display: block; margin: 0 auto;"/>
                         </div>
+                        [/IF]
 
-                        <p style="margin:12px 0 8px 0; font-weight: bold;">CPU 温度趋势 (最近1小时)：</p>
+                        <!-- CPU 温度 -->
+                        [IF:hasCpuTempTrend]
+                        <p style="margin:12px 0 8px 0; font-weight: bold;">🌡️ CPU 温度趋势 (最近1小时)：</p>
                         <div style="text-align: center; padding: 10px; background: #fff; border: 1px solid #eee; border-radius: 4px; overflow: hidden;">
                             <img src="cid:cpuTempTrend" alt="CPU温度趋势图" style="width: 100%; max-width: 450px; height: auto; display: block; margin: 0 auto;"/>
                         </div>
+                        [/IF]
 
                         <p style="margin:12px 0 12px 0;">愿你这一小时顺心如意，享受当下。</p>
                     </td>
